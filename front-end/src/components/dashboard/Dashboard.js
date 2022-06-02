@@ -1,9 +1,11 @@
 import React, { useEffect, useState } from "react";
 import { useHistory } from "react-router-dom";
-import { listReservations } from "../../utils/api";
+import { listReservations, listTables } from "../../utils/api";
 import { next, previous } from "../../utils/date-time";
 import useQuery from "../../utils/useQuery";
 import ErrorAlert from "./../../layout/ErrorAlert";
+import ReservationList from "../../components/reservations/ReservationList";
+import TableList from "../../components/tables/TableList";
 
 /**
  * Defines the dashboard page.
@@ -11,11 +13,12 @@ import ErrorAlert from "./../../layout/ErrorAlert";
  *  the date for which the user wants to view reservations.
  * @returns {JSX.Element}
  */
-function Dashboard({ date }) {
+export default function Dashboard({ date }) {
   const [reservations, setReservations] = useState([]);
+  const [tables, setTables] = useState([]);
   const [reservationsError, setReservationsError] = useState(null);
   const query = useQuery();
-  const dateQuery = query.get("date")
+  const dateQuery = query.get("date");
   const [pageDate, setPageDate] = useState(dateQuery ? dateQuery : date);
 
   const history = useHistory();
@@ -38,22 +41,26 @@ function Dashboard({ date }) {
   };
 
   function loadDashboard() {
-    const date = pageDate
+    const date = pageDate;
     const abortController = new AbortController();
     setReservationsError(null);
     listReservations({ date }, abortController.signal)
       .then(setReservations)
+      .catch(setReservationsError);
+    listTables(abortController.signal)
+      .then(setTables)
       .catch(setReservationsError);
     return () => abortController.abort();
   }
 
   return (
     <main>
-      <h1>Dashboard</h1>
-      <div className="d-md-flex mb-3">
-        <h4 className="mb-0">Reservations for date {pageDate}</h4>
+     <div className="dashboard dashboard-title row ml-1">
+        <h1>Dashboard</h1>
       </div>
-      <div>
+      <div className="d-md-flex mb-3 row ml-1">
+      </div>
+      <div className="dashboard dashboard-nav row ml-1 mb-3">
         <button className="btn btn-secondary" onClick={previousDateHandler}>
           Previous
         </button>
@@ -64,10 +71,17 @@ function Dashboard({ date }) {
           Next
         </button>
       </div>
-      <ErrorAlert error={reservationsError} />
-      {JSON.stringify(reservations)}
+      <div className="dashboard error-list row ml-1">
+        <ErrorAlert error={reservationsError} />
+      </div>
+      <div className="dashboard table-display row mx-1">
+        <div className="col">
+          <ReservationList reservations={reservations} />
+        </div>
+        <div className="col">
+          <TableList tables={tables} />
+        </div>
+      </div>
     </main>
   );
 }
-
-export default Dashboard;
