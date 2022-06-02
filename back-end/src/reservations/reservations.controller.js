@@ -40,6 +40,31 @@ function hasOnlyValidProperties(req, res, next) {
   next();
 }
 
+function validateReservation(req, res, next){
+  const {data = {} } = req.body;
+  console.log(Date.now(), "Date Now");
+  console.log(Date.parse(data["reservation_date"]), "Today");
+  let temp_reservation_time = data["reservation_time"] && data["reservation_time"].replace(":","");
+  if(new Date(data["reservation_date"]).getDay()+1 === 2){
+    next({
+      status: 400,
+      message: `We are closed on Tuesdays, please pick a day when we are open!`
+    })
+  } else if(Date.parse(data["reservation_date"]) < Date.now()){
+    console.log('something fucking up');
+    next({
+      status:400,
+      message: `Reservation must be reserved for a date in the future.`
+    })
+  } else if(temp_reservation_time < 1030){
+    next({ status: 400, message: "Reservation cannot be before business hours!"});
+  }
+  else if(temp_reservation_time > 2130){
+    next({ status: 400, message: "Reservation cannot be less than one hour before business closing!"});
+  }
+  next();
+}
+
 function validDate(req, res, next) {
   const { data = {} } = req.body;
   if (!data["reservation_date"].match(/\d{4}-\d{2}-\d{2}/)) {
@@ -84,6 +109,6 @@ async function create(req, res){
 }
 
 module.exports = {
-  create: [hasOnlyValidProperties, hasRequiredProperties, validDate, validTime, validPeople, asyncErrorBoundary(create)],
+  create: [hasOnlyValidProperties, hasRequiredProperties, validDate, validTime, validPeople, validateReservation, asyncErrorBoundary(create)],
   list: asyncErrorBoundary(list),
 };

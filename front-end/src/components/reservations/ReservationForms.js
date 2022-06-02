@@ -75,8 +75,12 @@ export default function ReservationForm({
           value={formData.people}
         />
       </label>
-      <button type="submit">Submit</button>
-      <button type="button" onClick={handleCancel}>Cancel</button>
+      <div>
+        <button className="btn btn-primary mr-2" type="submit">Submit</button>
+        <button className="btn btn-secondary" type="button" onClick={handleCancel}>
+          Cancel
+        </button>
+      </div>
     </form>
   );
 }
