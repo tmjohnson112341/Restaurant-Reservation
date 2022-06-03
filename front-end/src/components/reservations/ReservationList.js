@@ -15,6 +15,7 @@ export default function ReservationList({ reservations }) {
           <th scope="col">Date</th>
           <th scope="col">Time</th>
           <th scope="col">People</th>
+          <th scope="col">Status</th>
           <th scope="col"></th>
         </tr>
       </thead>

@@ -12,10 +12,14 @@ export default function Reservation({ reservation }) {
       <td>{reservation.reservation_date}</td>
       <td>{reservation.reservation_time}</td>
       <td>{reservation.people}</td>
+      <td data-reservation-id-status={reservation.reservation_id}>{reservation.status}</td>
       <td>
+        {reservation.status === "booked" ? 
         <Link to={`/reservations/${reservation.reservation_id}/seat`}>
           Seat
         </Link>
+        : null
+      }
       </td>
     </tr>
   );
