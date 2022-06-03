@@ -8,6 +8,12 @@ export default function CreateReservation() {
   const [errors, setErrors] = useState({});
   const history = useHistory();
 
+  const handleErrorClose = (event) => {
+    const errorMessage = event.target.parentNode.parentNode.childNodes[0].innerHTML;
+    delete errors[`${errorMessage}`];
+    setErrors({...errors});
+  }
+
   const errorMap = Object.keys(errors).map((error, index) => (
     <Error key={index} error={error} />
   ));
