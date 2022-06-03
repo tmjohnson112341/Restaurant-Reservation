@@ -1,12 +1,12 @@
 import React from "react";
 import CreateReservation from "../components/reservations/CreateReservation";
-
 import { Redirect, Route, Switch } from "react-router-dom";
 import Dashboard from "../components/dashboard/Dashboard";
 import NotFound from "./NotFound";
 import { today } from "../utils/date-time";
 import CreateTable from "../components/tables/CreateTable";
 import SeatReservation from "../components/reservations/CreateReservation";
+import Search from "../components/search/Search";
 
 /**
  * Defines all the routes for the application.
@@ -32,6 +32,9 @@ import SeatReservation from "../components/reservations/CreateReservation";
       </Route>
       <Route path="/tables/new">
         <CreateTable />
+      </Route>
+      <Route path="/search">
+        <Search />
       </Route>
       <Route path="/dashboard">
         <Dashboard date={today()} />
