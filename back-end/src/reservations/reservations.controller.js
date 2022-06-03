@@ -121,8 +121,13 @@ function read(req, res) {
 }
 
 async function list(req, res) {
+  if (req.query.mobile_number) {
+    const data = await service.search(req.query.mobile_number);
+    res.json({ data });
+  } else {
   const data = await service.list(req.query.date);
   res.json({ data });
+  }
 }
 
 async function create(req, res) {
