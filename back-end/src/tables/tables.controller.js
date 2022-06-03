@@ -24,6 +24,8 @@ function hasOnlyValidProperties(req, res, next) {
   }
   next();
 }
+
+
 function validCapacity(req, res, next) {
   const { data } = req.body;
   if (typeof data["capacity"] !== "number" || data["capacity"] < 1) {
@@ -34,6 +36,8 @@ function validCapacity(req, res, next) {
   }
   next();
 }
+
+
 function validName(req, res, next) {
   const { data } = req.body;
   if (data["table_name"].length < 2) {
@@ -44,6 +48,8 @@ function validName(req, res, next) {
   }
   next();
 }
+
+
 async function reservationExists(req, res, next) {
   const { reservation_id } = req.body.data;
   const foundReservation = await reservationService.read(reservation_id);
@@ -108,6 +114,18 @@ function currentlyOccupied(req,res,next){
   next();
 }
 
+function reservationNotSeated(req, res, next) {
+  const reservation = res.locals.reservation;
+  if (reservation.status === "booked") {
+    return next();
+  }
+  return next({
+    status: 400,
+    message: "Reservation is already seated or finished."
+  })
+}
+
+
 async function update(req, res) {
   const updatedTable = {
     ...res.locals.table,
@@ -142,6 +160,7 @@ module.exports = {
     asyncErrorBoundary(reservationExists),
     capacityCheck,
     occupiedCheck,
+    reservationNotSeated,
     asyncErrorBoundary(update),
   ],
   finish: [asyncErrorBoundary(tableExists), currentlyOccupied, asyncErrorBoundary(finish)],

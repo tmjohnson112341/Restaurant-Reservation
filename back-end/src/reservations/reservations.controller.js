@@ -1,16 +1,15 @@
-const service = require("./reservations.service")
-const asyncErrorBoundary = require("../errors/asyncErrorBoundary")
-const hasProperties = require("../errors/hasProperties")
+const service = require("./reservations.service");
+const asyncErrorBoundary = require("../errors/asyncErrorBoundary");
+const hasProperties = require("../errors/hasProperties");
 
-const hasRequiredProperties = 
-hasProperties(
+const hasRequiredProperties = hasProperties(
   "first_name",
   "last_name",
   "mobile_number",
   "reservation_date",
   "reservation_time",
   "people"
-)
+);
 
 const VALID_PROPERTIES = [
   "first_name",
@@ -21,8 +20,8 @@ const VALID_PROPERTIES = [
   "people",
   "created_at",
   "updated_at",
-]
-
+  "status",
+];
 
 function hasOnlyValidProperties(req, res, next) {
   const { data = {} } = req.body;
@@ -67,7 +66,7 @@ function validateReservation(req, res, next) {
     });
   }
   next();
-} 
+}
 
 function validDate(req, res, next) {
   const { data = {} } = req.body;
@@ -122,17 +121,78 @@ function read(req, res) {
 }
 
 async function list(req, res) {
-  const data = await service.list(req.query.date)
+  const data = await service.list(req.query.date);
   res.json({ data });
 }
 
-async function create(req, res){
+async function create(req, res) {
   const data = await service.create(req.body.data);
-  res.status(201).json({ data })
+  res.status(201).json({ data });
+}
+
+function validStatus(req, res, next) {
+  const reservation = res.locals.reservation;
+  const { data = {} } = req.body;
+  const status = data["status"];
+
+  if (reservation.status === "finished") {
+    return next({
+      status: 400,
+      message: "Reservation is already finished.",
+    });
+  }
+
+  const validStatuses = ["booked", "seated", "finished", "cancelled"];
+  if (validStatuses.includes(status)) {
+    return next();
+  }
+
+  return next({
+    status: 400,
+    message: `Invalid or unknown status: ${status}`,
+  });
+}
+
+function bookedCheck(req, res, next) {
+  const { data = {} } = req.body;
+  const status = data["status"];
+
+  if (status === "booked" || status === undefined) {
+    return next();
+  }
+  return next({
+    status: 400,
+    message: `Invalid or unknown status: ${status}`,
+  });
+}
+
+async function updateStatus(req, res) {
+  const reservation = res.locals.reservation;
+  const { status } = req.body.data;
+  const updatedReservation = {
+    ...reservation,
+    status,
+  };
+  const data = await service.updateStatus(updatedReservation);
+  res.json({ data });
 }
 
 module.exports = {
-  create: [hasOnlyValidProperties, hasRequiredProperties, validDate, validTime, validPeople, validateReservation, asyncErrorBoundary(create)],
+  create: [
+    hasOnlyValidProperties,
+    hasRequiredProperties,
+    validDate,
+    validTime,
+    validPeople,
+    validateReservation,
+    bookedCheck,
+    asyncErrorBoundary(create),
+  ],
   list: asyncErrorBoundary(list),
   read: [asyncErrorBoundary(reservationExists), read],
+  updateStatus: [
+    asyncErrorBoundary(reservationExists),
+    validStatus,
+    asyncErrorBoundary(updateStatus),
+  ],
 };

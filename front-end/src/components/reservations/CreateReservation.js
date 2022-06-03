@@ -15,7 +15,7 @@ export default function CreateReservation() {
   }
 
   const errorMap = Object.keys(errors).map((error, index) => (
-    <Error key={index} error={error} />
+    <Error key={index} error={error} handleErrorClose={handleErrorClose} />
   ));
 
   const initialFormData = {
