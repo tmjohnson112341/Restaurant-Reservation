@@ -21,6 +21,7 @@ const VALID_PROPERTIES = [
   "created_at",
   "updated_at",
   "status",
+  "reservation_id",
 ];
 
 function hasOnlyValidProperties(req, res, next) {
@@ -34,6 +35,17 @@ function hasOnlyValidProperties(req, res, next) {
     return next({
       status: 400,
       message: `Invalid field(s): ${invalidFields.join(", ")}`,
+    });
+  }
+  next();
+}
+
+function validDate(req, res, next) {
+  const { data = {} } = req.body;
+  if (!data["reservation_date"].match(/\d{4}-\d{2}-\d{2}/)) {
+    return next({
+      status: 400,
+      message: `reservation_date is invalid.`,
     });
   }
   next();
@@ -63,17 +75,6 @@ function validateReservation(req, res, next) {
       status: 400,
       message:
         "Reservation cannot be less than one hour before business closing!",
-    });
-  }
-  next();
-}
-
-function validDate(req, res, next) {
-  const { data = {} } = req.body;
-  if (!data["reservation_date"].match(/\d{4}-\d{2}-\d{2}/)) {
-    return next({
-      status: 400,
-      message: `reservation_date is invalid.`,
     });
   }
   next();
@@ -125,8 +126,8 @@ async function list(req, res) {
     const data = await service.search(req.query.mobile_number);
     res.json({ data });
   } else {
-  const data = await service.list(req.query.date);
-  res.json({ data });
+    const data = await service.list(req.query.date);
+    res.json({ data });
   }
 }
 
@@ -182,6 +183,15 @@ async function updateStatus(req, res) {
   res.json({ data });
 }
 
+async function update(req, res) {
+  const updatedReservation = {
+    ...req.body.data,
+    reservation_id: res.locals.reservation.reservation_id,
+  };
+  const data = await service.update(updatedReservation);
+  res.json({ data });
+}
+
 module.exports = {
   create: [
     hasOnlyValidProperties,
@@ -199,5 +209,16 @@ module.exports = {
     asyncErrorBoundary(reservationExists),
     validStatus,
     asyncErrorBoundary(updateStatus),
+  ],
+  update: [
+    asyncErrorBoundary(reservationExists),
+    hasOnlyValidProperties,
+    hasRequiredProperties,
+    validDate,
+    validTime,
+    validPeople,
+    validateReservation,
+    bookedCheck,
+    asyncErrorBoundary(update),
   ],
 };

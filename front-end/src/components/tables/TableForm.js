@@ -18,6 +18,7 @@ export default function TableForm({
             name="table_name"
             type="text"
             required
+            placeholder="Bar #1"
             onChange={handleChange}
             value={tableData.table_name}
           />

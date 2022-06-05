@@ -7,8 +7,8 @@ import ErrorAlert from "../../layout/ErrorAlert";
 export default function Table({ table }) {
   const [error, setError] = useState(null);
   const history = useHistory();
-  const handleFinish = async (e) => {
-    e.preventDefault();
+  const handleFinish = async (event) => {
+    event.preventDefault();
     try {
       if (
         window.confirm(

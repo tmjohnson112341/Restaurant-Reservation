@@ -1,13 +1,13 @@
 const knex = require("../db/connection.js");
+
 function list() {
   return knex("tables").select("*").orderBy("table_name");
 }
+
 function read(table_id) {
-  return knex("tables")
-  .select("*")
-  .where({ table_id })
-  .first();
+  return knex("tables").select("*").where({ table_id }).first();
 }
+
 async function update(updatedTable) {
   return knex.transaction(async (trx) => {
     await trx("reservations")

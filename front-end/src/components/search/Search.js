@@ -10,13 +10,13 @@ export default function SearchPage() {
   const [findError, setFindError] = useState(null);
   const [showList, setShowList] = useState(false);
 
-  const handleChange = (e) => {
-    e.preventDefault();
-    setMobileNumber(e.target.value);
+  const handleChange = (event) => {
+    event.preventDefault();
+    setMobileNumber(event.target.value);
   };
 
-  const handleFind = (e) => {
-    e.preventDefault();
+  const handleFind = (event) => {
+    event.preventDefault();
     const ac = new AbortController();
     function findReservations() {
       const mobile_number = mobileNumber;
@@ -47,13 +47,14 @@ export default function SearchPage() {
             name="mobile_number"
             type="text"
             required
+            placeholder="Enter Mobile Number"
             onChange={handleChange}
             value={mobileNumber}
           />
         </label>
         <div className="input-group-append">
           <button
-            className="btn btn-primary"
+            className="btn btn-secondary"
             type="submit"
             onClick={handleFind}
           >

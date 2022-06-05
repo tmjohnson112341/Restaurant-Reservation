@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from "react";
+import { FaTimes, FaCheck } from "react-icons/fa";
 import { useParams, useHistory } from "react-router-dom";
 import Loading from "../../layout/Loading";
 import { readReservation, listTables, seatReservation } from "../../utils/api";
@@ -57,53 +58,54 @@ export default function SeatReservation() {
   const optionMap = availableTables.map((table) => (
     <TableOption key={table.table_id} table={table} />
   ));
-  
-    if (Object.keys(currentReservation).length && availableTables.length) {
-      return (
-        <div>
-          <div className="seat seat-title row ml-1 mt-1">
-            <h1>Seat Reservation</h1>
-          </div>
-          <div className="seat seat-information row ml-1 mb-3">
-            <h3>
-              #{currentReservation.reservation_id} -{" "}
-              {currentReservation.first_name} {currentReservation.last_name} on{" "}
-              {currentReservation.reservation_date.split("T")[0]} at{" "}
-              {currentReservation.reservation_time} for{" "}
-              {currentReservation.people}
-            </h3>
-          </div>
-          <div className="seat seat-form row ml-1 mb-3">
-            <label htmlFor="table_id">Seat at:</label>
-            <select
-              name="table_id"
-              id="table_id"
-              onChange={handleSelectChange}
-              value={tableId}
+
+  if (Object.keys(currentReservation).length && availableTables.length) {
+    return (
+      <div>
+        <div className="seat seat-title row ml-1 mt-1">
+          <h1>Seat Reservation</h1>
+        </div>
+        <div className="seat seat-information row ml-1 mb-3">
+          <h3>
+            #{currentReservation.reservation_id} -{" "}
+            {currentReservation.first_name} {currentReservation.last_name} on{" "}
+            {currentReservation.reservation_date.split("T")[0]} at{" "}
+            {currentReservation.reservation_time} for{" "}
+            {currentReservation.people}
+          </h3>
+        </div>
+        <div className="seat seat-form form-group row ml-1 mb-3">
+          <label htmlFor="table_id">Seat at:</label>
+          <select
+            name="table_id"
+            id="table_id"
+            className="form-control"
+            onChange={handleSelectChange}
+            value={tableId}
+          >
+            <option value="">Select An Option</option>
+            {optionMap}
+          </select>
+        </div>
+        <div className="seat seat-options row ml-1">
+          <div>
+            <button
+              type="button"
+              className="btn btn-secondary mr-2"
+              onClick={handleCancel}
             >
-              <option value="">Select An Option</option>
-              {optionMap}
-            </select>
+              <FaTimes /> Cancel
+            </button>
           </div>
-          <div className="seat seat-options row ml-1">
-            <div>
-              <button
-                type="button"
-                className="btn btn-secondary mr-2"
-                onClick={handleCancel}
-              >
-                Cancel
-              </button>
-            </div>
-            <div>
-              <button type="submit" className="btn btn-primary" onClick={handleSubmit}>
-                Submit
-              </button>
-            </div>
+          <div>
+            <button type="submit" className="btn btn-primary" onClick={handleSubmit}>
+              <FaCheck /> Submit
+            </button>
           </div>
         </div>
-      );
-    } else {
-      return <Loading error={reservationError} />;
-    }
+      </div>
+    );
+  } else {
+    return <Loading error={reservationError} />;
   }
+}
