@@ -11,4 +11,4 @@ test("renders title", () => {
   );
   const restaurant = screen.getByText(/periodic tables/i);
   expect(restaurant).toBeInTheDocument();
-});
+}); 

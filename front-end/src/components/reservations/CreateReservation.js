@@ -1,24 +1,14 @@
 import React, { useState } from "react";
 import { useHistory } from "react-router-dom";
-import { createReservation } from "./../../utils/api";
-import ReservationForm from "./ReservationForms";
+import { createReservation } from "../../utils/api";
+import ReservationForm from "./ReservationForm";
 import Error from "../Error";
 
 export default function CreateReservation() {
   const [errors, setErrors] = useState({});
   const history = useHistory();
 
-  const handleErrorClose = (event) => {
-    const errorMessage = event.target.parentNode.parentNode.childNodes[0].innerHTML;
-    delete errors[`${errorMessage}`];
-    setErrors({...errors});
-  }
-
-  const errorMap = Object.keys(errors).map((error, index) => (
-    <Error key={index} error={error} handleErrorClose={handleErrorClose} />
-  ));
-
-  const initialFormData = {
+ const initialFormData = {
     first_name: "",
     last_name: "",
     mobile_number: "",
@@ -26,8 +16,17 @@ export default function CreateReservation() {
     reservation_time: "",
     people: 1,
   };
-
   const [formData, setFormData] = useState({ ...initialFormData });
+
+  const handleErrorClose = (event) => {
+    const errorMessage = event.target.parentNode.parentNode.childNodes[0].innerHTML;
+    delete errors[`${errorMessage}`];
+    setErrors({ ...errors });
+  };
+
+  const errorMap = Object.keys(errors).map((error, index) => (
+    <Error key={index} error={error} handleErrorClose={handleErrorClose} />
+  ));
 
   const handleChange = (event) => {
     event.preventDefault();
@@ -38,14 +37,15 @@ export default function CreateReservation() {
     event.preventDefault();
     history.go(-1);
   };
-
+  
   const submitHandler = async (event) => {
     event.preventDefault();
     const ac = new AbortController();
     formData.people = parseInt(formData.people);
+    formData.reservation_date = formData.reservation_date.split("T")[0];
     try {
       await createReservation(formData, ac.signal);
-       setErrors({});
+      setErrors({});
       history.push(`/dashboard?date=${formData.reservation_date}`);
     } catch (error) {
       if (!errors[error.message]) {
@@ -58,8 +58,8 @@ export default function CreateReservation() {
   return (
     <>
       <div className="createErrors">{errorMap ? errorMap : null}</div>
-      <h1 className="my-3">Create Reservation</h1>
       <ReservationForm
+        mode={"Create"}
         handleChange={handleChange}
         handleCancel={handleCancel}
         submitHandler={submitHandler}

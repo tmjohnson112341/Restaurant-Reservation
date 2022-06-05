@@ -5,8 +5,9 @@ import Dashboard from "../components/dashboard/Dashboard";
 import NotFound from "./NotFound";
 import { today } from "../utils/date-time";
 import CreateTable from "../components/tables/CreateTable";
-import SeatReservation from "../components/reservations/CreateReservation";
+import SeatReservation from "../components/reservations/SeatReservation";
 import Search from "../components/search/Search";
+import EditReservation from "../components/reservations/EditReservation";
 
 /**
  * Defines all the routes for the application.
@@ -30,6 +31,9 @@ import Search from "../components/search/Search";
       <Route path="/reservations/:reservation_id/seat">
         <SeatReservation />
       </Route>
+      <Route path="/reservations/:reservation_id/edit">
+        <EditReservation />
+      </Route>
       <Route path="/tables/new">
         <CreateTable />
       </Route>
@@ -45,4 +49,5 @@ import Search from "../components/search/Search";
     </Switch>
   );
 }
+
 export default Routes;
