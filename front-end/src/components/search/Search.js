@@ -3,6 +3,7 @@ import ReservationList from "../reservations/ReservationList";
 import SearchNoRes from "../search/SearchNoRes";
 import { listReservations } from "../../utils/api";
 import ErrorAlert from "../../layout/ErrorAlert";
+import "./Search.css"
 
 export default function SearchPage() {
   const [mobileNumber, setMobileNumber] = useState("");
@@ -52,13 +53,12 @@ export default function SearchPage() {
             value={mobileNumber}
           />
         </label>
-        <div className="input-group-append">
+        <div className="input-group mb-3">
           <button
-            className="btn btn-secondary"
+            className="btn btn-outline-dark"
             type="submit"
             onClick={handleFind}
-          >
-            Find
+          >Find
           </button>
         </div>
       </div>

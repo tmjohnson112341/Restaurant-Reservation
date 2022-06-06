@@ -23,7 +23,7 @@ export default function TableForm({
             value={tableData.table_name}
           />
         </label>
-        <label htmlFor="capacity">
+        <label htmlFor="capacity" style={{marginLeft:"15px"}}>
           Capacity:
           <input
             id="capacity"
@@ -36,11 +36,11 @@ export default function TableForm({
           />
         </label>
         <div>
-          <button className="btn btn-primary mr-2" type="submit">
+          <button className="btn btn-outline-dark mr-2" type="submit">
             Submit
           </button>
           <button
-            className="btn btn-secondary"
+            className="btn btn-outline-dark"
             type="button"
             onClick={handleCancel}
           >
