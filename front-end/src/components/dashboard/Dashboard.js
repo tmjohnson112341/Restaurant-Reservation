@@ -4,7 +4,6 @@ import { listReservations, listTables } from "../../utils/api";
 import { next, previous } from "../../utils/date-time";
 import useQuery from "../../utils/useQuery";
 import ErrorAlert from "./../../layout/ErrorAlert";
-import { FaAngleLeft, FaAngleRight } from "react-icons/fa";
 import ReservationList from "../../components/reservations/ReservationList";
 import TableList from "../../components/tables/TableList";
 import './Dashboard.css';
@@ -63,17 +62,15 @@ import './Dashboard.css';
       <div className=" dashboard dashboard-info d-md-flex mb-3 row ml-1">
         <h4 className="mb-0">Reservations for date {pageDate}</h4>
       </div>
-      <div className="dashboard dashboard-nav row ml-1 mb-3">
-        <button className="btn btn-secondary" onClick={previousDateHandler}>
-          <FaAngleLeft />
+      <div className="dashboard dashboard-nav row ml-1 mb-4">
+        <button className="btn btn-outline-dark mr-2" onClick={previousDateHandler}>
           Previous
         </button>
-        <button className="btn btn-secondary" onClick={todayHandler}>
+        <button className="btn btn-outline-dark mr-2" onClick={todayHandler}>
           Today
         </button>
-        <button className="btn btn-secondary" onClick={nextDateHandler}>
+        <button className="btn btn-outline-dark" onClick={nextDateHandler}>
           Next
-          <FaAngleRight />
         </button>
       </div>
       <div className="dashboard error-list row ml-1">
@@ -81,9 +78,11 @@ import './Dashboard.css';
       </div>
       <div className="dashboard table-display row mx-1">
         <div className="col scroll-me">
+          <h2>Reservations</h2>
           <ReservationList reservations={reservations} />
         </div>
         <div className="col">
+          <h2>Tables</h2>
           <TableList tables={tables} />
         </div>
       </div>
