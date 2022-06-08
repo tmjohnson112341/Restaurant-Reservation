@@ -22,7 +22,7 @@ export default function CreateTable() {
   };
 
   const errorMap = Object.keys(tableErrors).map((error, index) => (
-    <Error key={index} error={error} handleErrorClose={handleErrorClose} />
+    <Error key={`error-${error}`} error={error} handleErrorClose={handleErrorClose} />
   ));
 
   const handleSubmit = async (event) => {
