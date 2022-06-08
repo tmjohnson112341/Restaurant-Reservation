@@ -79,7 +79,7 @@ Clicking on the "Finish" button of an "Occupied" table will display the followin
 - This action will also change that reservation's status to finished and the system will remove the reservation from the Dashboard.
 - Clicking "Cancel" on the confirmation dialog will make no changes.
 
-![Finish-an-Occupied-Table](screenshotsFinal/Finish-an-Occupied-Table.png
+![Finish-an-Occupied-Table](screenshotsFinal/Finish-an-Occupied-Table.png)
 
 ### Cancel a Reservation:
 
