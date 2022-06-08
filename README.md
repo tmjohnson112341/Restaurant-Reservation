@@ -42,7 +42,7 @@ The Dashboard is located at /dashboard and has the following features:
 	- Each table will display "Free" or "Occupied" depending on whether or not a reservation is seated at the table.
 	- Each "Occupied" table will have a "Finish" button.
 - Displays any error messages returned from the API.
-
+![Dashboard](screenshotsFinal/Dashboard.png)
 ### Create a New Reservation:
 
 - Clicking on "New Reservation" of the Menu side bar will take the user to the /reservations/new page.
