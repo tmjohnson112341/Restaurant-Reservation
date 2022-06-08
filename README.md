@@ -42,7 +42,9 @@ The Dashboard is located at /dashboard and has the following features:
 	- Each table will display "Free" or "Occupied" depending on whether or not a reservation is seated at the table.
 	- Each "Occupied" table will have a "Finish" button.
 - Displays any error messages returned from the API.
+- 
 ![Dashboard](screenshotsFinal/Dashboard.png)
+
 ### Create a New Reservation:
 
 - Clicking on "New Reservation" of the Menu side bar will take the user to the /reservations/new page.
@@ -50,6 +52,8 @@ The Dashboard is located at /dashboard and has the following features:
 - Clicking on the "Submit" button will save the reservation and then display the /dashboard page for the date of the new reservation.
 - Clicking on the "Cancel" button will take the user to the previous page.
 - While attempting to create a new reservation, any error messages returned from the API will be displayed.
+
+![Create-a-New-Reservation](screenshotsFinal/Create-a-New-Reservation.png)
 
 ### Create a New Table:
 
@@ -59,9 +63,13 @@ The Dashboard is located at /dashboard and has the following features:
 - Clicking on the "Cancel" button will take the user to the previous page.
 - While attempting to create a new table, any error messages returned from the API will be displayed.
 
+![Create-a-New-Table](screenshotsFinal/Create-a-New-Table.png)
+
 ### Seat a Reservation:
 
 - When the user clicks on the "Seat" button associated with a particular reservation, the application will take the user to the Seat Reservation page.
+
+![Seat-a-Reservation](screenshotsFinal/Seat-a-Reservation.png)
 
 ### Finish an Occupied Table:
 
@@ -71,6 +79,8 @@ Clicking on the "Finish" button of an "Occupied" table will display the followin
 - This action will also change that reservation's status to finished and the system will remove the reservation from the Dashboard.
 - Clicking "Cancel" on the confirmation dialog will make no changes.
 
+![Finish-an-Occupied-Table](screenshotsFinal/Finish-an-Occupied-Table.png
+
 ### Cancel a Reservation:
 
 Clicking on the "Cancel" button associated with a particular reservation will display the following confirmation:
@@ -79,6 +89,8 @@ Clicking on the "Cancel" button associated with a particular reservation will di
 - This action will also change that reservation's status to finished and the system will remove the reservation from the Dashboard.
 - Clicking "Cancel" on the confirmation dialog will make no changes.
 
+![Cancel-a-Reservation](screenshotsFinal/Cancel-a-Reservation.png
+
 ### Edit a Reservation:
 
 Clicking on the "Edit" button will navigate the user to the following page:
@@ -86,3 +98,5 @@ Clicking on the "Edit" button will navigate the user to the following page:
 - This page will display the reservation form with the existing reservation data already filled in.
 - Clicking on the "Submit" button will save the reservation and then display the updated reservation on the /dashboard page.
 - Clicking on the "Cancel" button will make no changes and the user will be taken back to the previous page.
+
+![Edit-a-Reservation](screenshotsFinal/Edit-a-Reservation.png
