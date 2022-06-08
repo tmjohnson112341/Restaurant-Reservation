@@ -86,4 +86,3 @@ Clicking on the "Edit" button will navigate the user to the following page:
 - This page will display the reservation form with the existing reservation data already filled in.
 - Clicking on the "Submit" button will save the reservation and then display the updated reservation on the /dashboard page.
 - Clicking on the "Cancel" button will make no changes and the user will be taken back to the previous page.
-Below you can view the reservation after it has been edited:
