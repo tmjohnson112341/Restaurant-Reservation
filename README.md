@@ -79,7 +79,7 @@ Clicking on the "Finish" button of an "Occupied" table will display the followin
 - This action will also change that reservation's status to finished and the system will remove the reservation from the Dashboard.
 - Clicking "Cancel" on the confirmation dialog will make no changes.
 
-![Finish-an-Occupied-Table](screenshotsFinal/Finish-an-Occupied-Table.png)
+![Finish-an-Occupied-Table](screenshotsFinal/Finish-an-Occupied-Table.PNG)
 
 ### Cancel a Reservation:
 
@@ -89,7 +89,7 @@ Clicking on the "Cancel" button associated with a particular reservation will di
 - This action will also change that reservation's status to finished and the system will remove the reservation from the Dashboard.
 - Clicking "Cancel" on the confirmation dialog will make no changes.
 
-![Cancel-a-Reservation](screenshotsFinal/Cancel-a-Reservation.png
+![Cancel-a-Reservation](screenshotsFinal/Cancel-a-Reservation.PNG)
 
 ### Edit a Reservation:
 
@@ -99,4 +99,4 @@ Clicking on the "Edit" button will navigate the user to the following page:
 - Clicking on the "Submit" button will save the reservation and then display the updated reservation on the /dashboard page.
 - Clicking on the "Cancel" button will make no changes and the user will be taken back to the previous page.
 
-![Edit-a-Reservation](screenshotsFinal/Edit-a-Reservation.png
+![Edit-a-Reservation](screenshotsFinal/Edit-a-Reservation.png)
